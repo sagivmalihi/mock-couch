@@ -37,7 +37,7 @@ function MockCouch(server, options) {
   /*jslint unparam:false*/
 
   (function (server, self) {
-    var all_dbs, all_docs, get_db, get_changes, get_view, get_doc, put_doc, get_uuids, get_show;
+    var all_dbs, all_docs, get_db, get_changes, get_view, get_doc, put_doc, get_uuids, get_show, put_update;
     /**
      * Add the routes
      */
@@ -79,6 +79,10 @@ function MockCouch(server, options) {
     get_view = require('./lib/get_view')(self);
     server.get('/:db/_design/:doc/_view/:name', get_view);
     server.post('/:db/_design/:doc/_view/:name', get_view);
+
+    // PUT _update
+    put_update = require('./lib/put_update')(self);
+    server.put('/:db/_design/:doc/_update/:name/:id', put_update);
 
     // GET and HEAD a certain document or _design document
     get_doc = require('./lib/get_doc')(self);
